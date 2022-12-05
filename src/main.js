@@ -38,3 +38,6 @@ filmListContainer.forEach((container) => {
 const footerStatistics = document.querySelector('.footer__statistics');
 render(footerStatistics, createFilmCountTemlate());
 
+const footer = document.querySelector('.footer');
+render(footer, createPopupTemlate(), 'afterend');
+
