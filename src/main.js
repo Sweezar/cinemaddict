@@ -10,7 +10,6 @@ import { createExtraContainer } from './view/extra.js';
 
 import { generateFilmData } from './mock/film-data.js';
 
-const MOVIE_CARD_COUNT = 5;
 const MOVIE_CARD_COUNT_EXTRA = 2;
 const dataMovies = new Array(25).fill().map(() => generateFilmData());
 const filter = generateFilter(dataMovies);
@@ -24,14 +23,26 @@ render(header, createUserRankTemlate());
 
 const main = document.querySelector('.main');
 render(main, createMenuTemlate(filter));
+document.querySelector('.main-navigation__item').classList.add('main-navigation__item--active');
 render(main, createSortTemlate());
 render(main, createMainContentTemlate());
 
 //Заполнение карточками поля с основным контентом
 const filmListContainer = document.querySelector('.films-list__container');
-for (let i = 0; i < MOVIE_CARD_COUNT; i++) {
-  render(filmListContainer, createFilmCardTemlate(dataMovies[i]));
+let MOVIE_CARD_COUNT = 5;
+let itterationCount = 0;
+const showMoreBtn = document.querySelector('.films-list__show-more'); //Кнопка Show More
+showMoreBtn.addEventListener('click', generateFilmList);
+function generateFilmList() {
+  for (itterationCount; itterationCount < MOVIE_CARD_COUNT; itterationCount++) {
+    render(filmListContainer, createFilmCardTemlate(dataMovies[itterationCount]));
+  }
+  if (MOVIE_CARD_COUNT >= 20) {
+    showMoreBtn.classList.add('visually-hidden');
+  }
+  MOVIE_CARD_COUNT = MOVIE_CARD_COUNT + 5;
 }
+generateFilmList();
 
 //Добавление полей Top Rating и Most Commented
 const filmsContainer = document.querySelector('.films');
