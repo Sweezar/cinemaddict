@@ -90,7 +90,7 @@ const COMMENTS = [
 ];
 
 function generateDescription() {
-  let descriptionCount = randomNumber(0,5);
+  let descriptionCount = randomNumber(1,5);
   let description = '';
   while (descriptionCount > 0) {
     description = description + getRandomArrayElement(DESCRIPTIONS);
@@ -102,13 +102,21 @@ function generateDescription() {
 function generateFilmData() {
   return {
     title: `${getRandomArrayElement(TITLES)}`,
-    poster: `../../public/images/posters/${getRandomArrayElement(POSTERS)}`,
+    poster: `./images/posters/${getRandomArrayElement(POSTERS)}`,
     description: generateDescription(),
-    comments: shuffle(COMMENTS.slice(0, randomNumber(0,5))),
     rating: randomNumber(0,10),
-    year: randomNumber(1920, 2020),
     genre: `${getRandomArrayElement(GENRES)}`,
-    duration: `${randomNumber(1,3)}h ${randomNumber(0,59)}m`,
+    comments: shuffle(COMMENTS.slice(0, randomNumber(0,5))),
+    isAddWatchlist: Boolean(randomNumber(0, 1)),
+    isWatched: Boolean(randomNumber(0, 1)),
+    isFavorite: Boolean(randomNumber(0, 1)),
+
+    director: 'Anthony Mann',
+    writers: 'Anne Wigton, Heinz Herald, Richard Weil',
+    actors: 'Erich von Stroheim, Mary Beth Hughes, Dan Duryea',
+    releaseDate: '1945-03-30',
+    runtime: '1h 18m',
+    country: 'USA',
   };
 }
 

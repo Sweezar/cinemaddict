@@ -1,4 +1,4 @@
-export { getRandomArrayElement, randomNumber, shuffle };
+export { getRandomArrayElement, randomNumber, shuffle, limitStr };
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -14,4 +14,8 @@ function shuffle(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
+}
+
+function limitStr(str, n) {
+  return str.substr(0, n - 3) + '...';
 }
