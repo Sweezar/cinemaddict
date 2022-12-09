@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {getRandomArrayElement, randomNumber, shuffle} from '../view/utils.js';
 export {generateFilmData};
 
@@ -44,48 +45,38 @@ const GENRES = [
   'Film-Noir',
 ];
 
+function generateCommentDate() {
+  return dayjs().add(randomNumber(0, -765), 'days').toDate();
+}
+
 const COMMENTS = [
   {
     id: 1,
     text: 'Отличный фильм',
-    date: '',
-    author: '',
-    emotion: '',
+    date: generateCommentDate(),
+    author: 'John Doe',
+    emotion: './images/emoji/angry.png',
   },
   {
     id: 2,
     text: 'Страшно',
-    date: '',
-    author: '',
-    emotion: '',
+    date: generateCommentDate(),
+    author: 'John Doe',
+    emotion: './images/emoji/puke.png',
   },
   {
     id: 3,
-    text: 'Очень смешно',
-    date: '',
-    author: '',
-    emotion: '',
+    text: 'Фильм на один раз',
+    date: generateCommentDate(),
+    author: 'John Doe',
+    emotion: './images/emoji/sleeping.png',
   },
   {
     id: 4,
-    text: 'Я плакал',
-    date: '',
-    author: '',
-    emotion: '',
-  },
-  {
-    id: 5,
-    text: 'Фильм на один раз',
-    date: '',
-    author: '',
-    emotion: '',
-  },
-  {
-    id: 6,
     text: 'Ничего не понял, но очень интересно',
-    date: '',
-    author: '',
-    emotion: '',
+    date: generateCommentDate(),
+    author: 'Tim Macoveev',
+    emotion: './images/emoji/smile.png',
   },
 ];
 
@@ -105,18 +96,19 @@ function generateFilmData() {
     poster: `./images/posters/${getRandomArrayElement(POSTERS)}`,
     description: generateDescription(),
     rating: randomNumber(0,10),
-    genre: `${getRandomArrayElement(GENRES)}`,
+    genres: [getRandomArrayElement(GENRES), getRandomArrayElement(GENRES), getRandomArrayElement(GENRES)],
     comments: shuffle(COMMENTS.slice(0, randomNumber(0,5))),
     isAddWatchlist: Boolean(randomNumber(0, 1)),
     isWatched: Boolean(randomNumber(0, 1)),
     isFavorite: Boolean(randomNumber(0, 1)),
 
     director: 'Anthony Mann',
-    writers: 'Anne Wigton, Heinz Herald, Richard Weil',
-    actors: 'Erich von Stroheim, Mary Beth Hughes, Dan Duryea',
+    writers: ['Anne Wigton', 'Heinz Herald', 'Richard Weil'],
+    actors: ['Erich von Stroheim', 'Mary Beth Hughes', 'Dan Duryea'],
     releaseDate: '1945-03-30',
     runtime: '1h 18m',
     country: 'USA',
+    age: '18+',
   };
 }
 

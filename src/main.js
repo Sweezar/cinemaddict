@@ -6,6 +6,7 @@ import { createSortTemlate } from './view/sort.js';
 import { createMainContentTemlate } from './view/main-content.js';
 import { createFilmCountTemlate } from './view/film-count.js';
 import { generateFilter } from './mock/filter.js';
+import { createExtraContainer } from './view/extra.js';
 
 import { generateFilmData } from './mock/film-data.js';
 
@@ -26,22 +27,34 @@ render(main, createMenuTemlate(filter));
 render(main, createSortTemlate());
 render(main, createMainContentTemlate());
 
-const filmListContainer = document.querySelectorAll('.films-list__container');
-filmListContainer.forEach((container) => {
-  if (!container.parentNode.matches('.films-list--extra')) {
-    for (let i = 0; i < MOVIE_CARD_COUNT; i++) {
-      render(container, createFilmCardTemlate(dataMovies[i]));
-    }
-  } else {
-    for (let i = 1; i <= MOVIE_CARD_COUNT_EXTRA; i++) {
-      render(container, createFilmCardTemlate(dataMovies[i]));
-    }
-  }
-});
+//Заполнение карточками поля с основным контентом
+const filmListContainer = document.querySelector('.films-list__container');
+for (let i = 0; i < MOVIE_CARD_COUNT; i++) {
+  render(filmListContainer, createFilmCardTemlate(dataMovies[i]));
+}
+
+//Добавление полей Top Rating и Most Commented
+const filmsContainer = document.querySelector('.films');
+render(filmsContainer, createExtraContainer());
+
+//Заполнение Top Rating
+const topListContainer = document.querySelector('#top-rated .films-list__container');
+const sortTopMovies = dataMovies.slice().sort((a,b) => {return b.rating - a.rating});
+for (let i = 0; i < MOVIE_CARD_COUNT_EXTRA; i++) {
+  render(topListContainer, createFilmCardTemlate(sortTopMovies[i]));
+}
+
+//Заполнение Most Commented
+const mostCommentedListContainer = document.querySelector('#most-commented .films-list__container');
+const sortMostCommentedMovies = dataMovies.slice().sort((a,b) => {return b.comments.length - a.comments.length});
+for (let i = 0; i < MOVIE_CARD_COUNT_EXTRA; i++) {
+  render(mostCommentedListContainer, createFilmCardTemlate(sortMostCommentedMovies[i]));
+}
 
 const footerStatistics = document.querySelector('.footer__statistics');
 render(footerStatistics, createFilmCountTemlate());
 
 const footer = document.querySelector('.footer');
-render(footer, createPopupTemlate(), 'afterend');
+render(footer, createPopupTemlate(dataMovies[0]), 'afterend');
+
 
