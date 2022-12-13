@@ -1,4 +1,4 @@
-export { getRandomArrayElement, randomNumber, shuffle, limitStr };
+export { getRandomArrayElement, randomNumber, shuffle, limitStr, createElement };
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -18,4 +18,10 @@ function shuffle(array) {
 
 function limitStr(str, n) {
   return str.substr(0, n - 3) + '...';
+}
+
+function createElement(template) {
+  const newElement = document.createElement('div');
+  newElement.innerHTML = template;
+  return newElement.firstChild;
 }

@@ -1,6 +1,6 @@
 import { createMenuTemlate } from './view/menu.js';
 import { createFilmCardTemlate } from './view/film-card.js';
-import { createUserRankTemlate } from './view/user-rank.js';
+import UserRankView from './view/user-rank.js';
 import { createPopupTemlate } from './view/popup.js';
 import { createSortTemlate } from './view/sort.js';
 import { createMainContentTemlate } from './view/main-content.js';
@@ -11,7 +11,7 @@ import { createExtraContainer } from './view/extra.js';
 import { generateFilmData } from './mock/film-data.js';
 
 const MOVIE_CARD_COUNT_EXTRA = 2;
-const dataMovies = new Array(25).fill().map(() => generateFilmData());
+const dataMovies = new Array(20).fill().map(() => generateFilmData());
 const filter = generateFilter(dataMovies);
 
 function render(container, template, place = 'beforeend') {
@@ -19,7 +19,7 @@ function render(container, template, place = 'beforeend') {
 }
 
 const header = document.querySelector('.header');
-render(header, createUserRankTemlate());
+render(header, new UserRankView().getElement());
 
 const main = document.querySelector('.main');
 render(main, createMenuTemlate(filter));
@@ -31,18 +31,20 @@ render(main, createMainContentTemlate());
 const filmListContainer = document.querySelector('.films-list__container');
 let MOVIE_CARD_COUNT = 5;
 let itterationCount = 0;
+generateFilmList();
 const showMoreBtn = document.querySelector('.films-list__show-more'); //Кнопка Show More
 showMoreBtn.addEventListener('click', generateFilmList);
+
 function generateFilmList() {
-  for (itterationCount; itterationCount < MOVIE_CARD_COUNT; itterationCount++) {
+  while (itterationCount < MOVIE_CARD_COUNT && itterationCount < dataMovies.length) {
     render(filmListContainer, createFilmCardTemlate(dataMovies[itterationCount]));
+    itterationCount++;
   }
-  if (MOVIE_CARD_COUNT >= 20) {
+  if (MOVIE_CARD_COUNT >= dataMovies.length) {
     showMoreBtn.classList.add('visually-hidden');
   }
-  MOVIE_CARD_COUNT = MOVIE_CARD_COUNT + 5;
+  MOVIE_CARD_COUNT += 5;
 }
-generateFilmList();
 
 //Добавление полей Top Rating и Most Commented
 const filmsContainer = document.querySelector('.films');
