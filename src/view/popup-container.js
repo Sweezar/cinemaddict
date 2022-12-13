@@ -1,16 +1,16 @@
 import { createElement } from './utils.js';
-export function createFilmCountTemlate(filmCount) {
-  return `<p>${filmCount} movies inside</p>`;
+
+function createPopupContainer() {
+  return '<section class="film-details"></section>';
 }
 
-export default class FilmCount {
-  constructor(filmCount) {
+export default class PopupContainer {
+  constructor() {
     this._element = null;
-    this._filmCount = filmCount;
   }
 
   getTemplate() {
-    return createFilmCountTemlate(this._filmCount);
+    return createPopupContainer();
   }
 
   getElement() {

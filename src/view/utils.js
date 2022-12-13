@@ -1,4 +1,4 @@
-export { getRandomArrayElement, randomNumber, shuffle, limitStr, createElement };
+export { getRandomArrayElement, randomNumber, shuffle, limitStr, createElement, render, RenderPosition };
 
 function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -18,6 +18,26 @@ function shuffle(array) {
 
 function limitStr(str, n) {
   return str.substr(0, n - 3) + '...';
+}
+
+const RenderPosition = {
+  AFTERBEGIN: 'afterbegin',
+  AFTEREND: 'afterend',
+  BEFOREEND: 'beforeend',
+};
+
+function render(container, element, place) {
+  switch(place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+    case RenderPosition.AFTEREND:
+      container.after(element);
+      break;
+  }
 }
 
 function createElement(template) {

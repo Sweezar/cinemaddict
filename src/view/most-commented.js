@@ -1,26 +1,22 @@
 import { createElement } from './utils';
 
-function createMainContentTemlate() {
-  return `<section class="films">
-  <section class="films-list">
-    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+function createMostCommentedContainer() {
+  return `<section class="films-list films-list--extra" id="most-commented">
+    <h2 class="films-list__title">Most commented</h2>
 
     <div class="films-list__container">
       
     </div>
-
-    <button class="films-list__show-more">Show more</button>
-  </section>
-</section>`;
+  </section>`;
 }
 
-export default class MainContent {
+export default class MostCommented {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createMainContentTemlate();
+    return createMostCommentedContainer();
   }
 
   getElement() {
