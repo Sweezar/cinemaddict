@@ -1,23 +1,18 @@
-import { createElement } from './utils';
+import {createElement } from './utils.js';
 
-function createMainContentTemlate() {
+function createMainEmptyTemlate() {
   return `<section class="films-list">
-    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-
-    <div class="films-list__container">
-      
-    </div>
-
-  </section>`;
+    <h2 class="films-list__title">There are no movies in our database</h2>
+</section>`;
 }
 
-export default class MainContent {
+export default class MainEmpty {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createMainContentTemlate();
+    return createMainEmptyTemlate();
   }
 
   getElement() {
