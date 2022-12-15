@@ -1,4 +1,4 @@
-import { createElement } from './utils';
+import AbstractView from './abstract.js';
 
 function createTopRatedContainer() {
   return `<section class="films-list films-list--extra" id="top-rated">
@@ -10,23 +10,12 @@ function createTopRatedContainer() {
   </section>`;
 }
 
-export default class TopRated {
+export default class TopRated extends AbstractView {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
     return createTopRatedContainer();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

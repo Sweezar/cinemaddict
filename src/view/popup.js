@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import { createElement } from './utils.js';
+import AbstractView from './abstract.js';
+
 function createPopupTemlate(movie) {
   const {title, poster, description, rating, genres, comments, isAddWatchlist, isWatched, isFavorite, director, writers, actors, releaseDate, runtime, country, age} = movie;
 
@@ -157,24 +158,13 @@ function createPopupTemlate(movie) {
     </form>`;
 }
 
-export default class Popup {
+export default class Popup extends AbstractView {
   constructor(data) {
-    this._element = null;
+    super();
     this._data = data;
   }
 
   getTemplate() {
     return createPopupTemlate(this._data);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

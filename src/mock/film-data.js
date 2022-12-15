@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import {getRandomArrayElement, randomNumber, shuffle} from '../view/utils.js';
-export {generateFilmData};
+import { getRandomArrayElement, randomNumber, shuffle } from '../utils/utils.js';
+export { generateFilmData };
 
 const TITLES = [
   'The Dance of Life',
@@ -9,7 +9,8 @@ const TITLES = [
   'Santa Claus Conquers the Martians',
   'Popeye the Sailor Meets Sindbad the Sailor',
   'The Great Flamarion',
-  'Made for Each Other'];
+  'Made for Each Other',
+];
 
 const POSTERS = [
   'the-dance-of-life.jpg',
@@ -81,7 +82,7 @@ const COMMENTS = [
 ];
 
 function generateDescription() {
-  let descriptionCount = randomNumber(1,5);
+  let descriptionCount = randomNumber(1, 5);
   let description = '';
   while (descriptionCount > 0) {
     description = description + getRandomArrayElement(DESCRIPTIONS);
@@ -95,9 +96,13 @@ function generateFilmData() {
     title: `${getRandomArrayElement(TITLES)}`,
     poster: `./images/posters/${getRandomArrayElement(POSTERS)}`,
     description: generateDescription(),
-    rating: randomNumber(0,10),
-    genres: [getRandomArrayElement(GENRES), getRandomArrayElement(GENRES), getRandomArrayElement(GENRES)],
-    comments: shuffle(COMMENTS.slice(0, randomNumber(0,5))),
+    rating: randomNumber(0, 10),
+    genres: [
+      getRandomArrayElement(GENRES),
+      getRandomArrayElement(GENRES),
+      getRandomArrayElement(GENRES),
+    ],
+    comments: shuffle(COMMENTS.slice(0, randomNumber(0, 5))),
     isAddWatchlist: Boolean(randomNumber(0, 1)),
     isWatched: Boolean(randomNumber(0, 1)),
     isFavorite: Boolean(randomNumber(0, 1)),
@@ -111,4 +116,3 @@ function generateFilmData() {
     age: '18+',
   };
 }
-

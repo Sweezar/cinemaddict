@@ -1,26 +1,15 @@
-import {createElement } from './utils.js';
+import AbstractView from './abstract.js';
 
 function createShowMoreBtnTemlate() {
   return '<button class="films-list__show-more">Show more</button>';
 }
 
-export default class ShowMoreBtn {
+export default class ShowMoreBtn extends AbstractView {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
     return createShowMoreBtnTemlate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

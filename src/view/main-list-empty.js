@@ -1,4 +1,4 @@
-import {createElement } from './utils.js';
+import AbstractView from './abstract.js';
 
 function createMainEmptyTemlate() {
   return `<section class="films-list">
@@ -6,23 +6,12 @@ function createMainEmptyTemlate() {
 </section>`;
 }
 
-export default class MainEmpty {
+export default class MainEmpty extends AbstractView {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
     return createMainEmptyTemlate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,4 +1,4 @@
-import { createElement } from './utils';
+import AbstractView from './abstract.js';
 
 function createUserRankTemlate() {
   return `<section class="header__profile profile">
@@ -7,23 +7,12 @@ function createUserRankTemlate() {
 </section>`;
 }
 
-export default class UserRank {
+export default class UserRank extends AbstractView {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
     return createUserRankTemlate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

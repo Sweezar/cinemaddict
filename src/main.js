@@ -12,7 +12,7 @@ import FilmCountView from './view/film-count.js';
 import { generateFilter } from './mock/filter.js';
 import TopRatedView from './view/top-rated.js';
 import MostCommentedView from './view/most-commented.js';
-import { render, RenderPosition } from './view/utils';
+import { render, RenderPosition } from './utils/render.js';
 import { generateFilmData } from './mock/film-data.js';
 
 const MOVIE_CARD_COUNT_EXTRA = 2;
@@ -20,18 +20,18 @@ const dataMovies = new Array(20).fill().map(() => generateFilmData());
 const filter = generateFilter(dataMovies);
 
 const header = document.querySelector('.header');
-render(header, new UserRankView().getElement(), RenderPosition.BEFOREEND);
+render(header, new UserRankView(), RenderPosition.BEFOREEND);
 
 const main = document.querySelector('.main');
-render(main, new FilterMenuView(filter).getElement(), RenderPosition.BEFOREEND);
+render(main, new FilterMenuView(filter), RenderPosition.BEFOREEND);
 document
   .querySelector('.main-navigation__item')
   .classList.add('main-navigation__item--active');
 const sortContainer = new SortView();
-render(main, sortContainer.getElement(), RenderPosition.BEFOREEND);
+render(main, sortContainer, RenderPosition.BEFOREEND);
 
 const mainContainer = new MainContainerView();
-render(main, mainContainer.getElement(), RenderPosition.BEFOREEND);
+render(main, mainContainer, RenderPosition.BEFOREEND);
 if (dataMovies.length) {
   renderMainContentContainer();
 } else {
@@ -41,15 +41,14 @@ if (dataMovies.length) {
 const footerStatistics = document.querySelector('.footer__statistics');
 render(
   footerStatistics,
-  new FilmCountView(dataMovies.length).getElement(),
+  new FilmCountView(dataMovies.length),
   RenderPosition.BEFOREEND,
 );
-
 
 //Весь контент вынес в отдельную функцию
 function renderMainContentContainer() {
   const mainContent = new MainContentView();
-  render(mainContainer.getElement(), mainContent.getElement(), RenderPosition.BEFOREEND);
+  render(mainContainer, mainContent, RenderPosition.BEFOREEND);
 
   //Заполнение карточками поля с основным контентом
   const filmListContainer = document.querySelector('.films-list__container');
@@ -67,23 +66,15 @@ function renderMainContentContainer() {
       .getElement()
       .querySelector('.film-card__poster')
       .addEventListener('click', () => {
-        render(footer, popupContainer.getElement(), RenderPosition.AFTEREND);
-        render(
-          popupContainer.getElement(),
-          popup.getElement(),
-          RenderPosition.AFTERBEGIN,
-        );
+        render(footer, popupContainer, RenderPosition.AFTEREND);
+        render(popupContainer, popup, RenderPosition.AFTERBEGIN);
         popup
           .getElement()
           .querySelector('.film-details__close-btn')
           .addEventListener('click', closePopup);
         window.addEventListener('keydown', escKeydownHandler);
       });
-    render(
-      cardListElement,
-      cardCompanent.getElement(),
-      RenderPosition.BEFOREEND,
-    );
+    render(cardListElement, cardCompanent, RenderPosition.BEFOREEND);
 
     function closePopup() {
       popupContainer.getElement().remove();
@@ -97,7 +88,7 @@ function renderMainContentContainer() {
     }
   }
 
-  function generateFilmList(evt) {
+  function generateFilmList() {
     while (
       itterationCount < MOVIE_CARD_COUNT &&
       itterationCount < dataMovies.length
@@ -106,7 +97,9 @@ function renderMainContentContainer() {
       itterationCount++;
     }
     if (MOVIE_CARD_COUNT >= dataMovies.length) {
-      evt.target.classList.add('visually-hidden');
+      if (this.matches('.films-list__show-more')) {
+        this.classList.add('visually-hidden');
+      }
     }
     MOVIE_CARD_COUNT += 5;
   }
@@ -115,25 +108,13 @@ function renderMainContentContainer() {
   function renderShowMoreBtn() {
     const showMoreBtn = new ShowMoreBtnView();
     showMoreBtn.getElement().addEventListener('click', generateFilmList);
-    render(
-      mainContent.getElement(),
-      showMoreBtn.getElement(),
-      RenderPosition.BEFOREEND,
-    );
+    render(mainContent, showMoreBtn, RenderPosition.BEFOREEND);
   }
   renderShowMoreBtn();
 
   //Добавление полей Top Rating и Most Commented
-  render(
-    mainContainer.getElement(),
-    new TopRatedView().getElement(),
-    RenderPosition.BEFOREEND,
-  );
-  render(
-    mainContainer.getElement(),
-    new MostCommentedView().getElement(),
-    RenderPosition.BEFOREEND,
-  );
+  render(mainContainer, new TopRatedView(), RenderPosition.BEFOREEND);
+  render(mainContainer, new MostCommentedView(), RenderPosition.BEFOREEND);
 
   //Заполнение Top Rating
   const topListContainer = document.querySelector(
@@ -160,6 +141,6 @@ function renderMainContentContainer() {
 
 function renderMainEmptyContent() {
   const mainEmpty = new MainEmptyView();
-  render(main, mainEmpty.getElement(), RenderPosition.BEFOREEND);
+  render(main, mainEmpty, RenderPosition.BEFOREEND);
   sortContainer.getElement().style.display = 'none';
 }

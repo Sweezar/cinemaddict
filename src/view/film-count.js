@@ -1,26 +1,16 @@
-import { createElement } from './utils.js';
-export function createFilmCountTemlate(filmCount) {
+import AbstractView from './abstract.js';
+
+function createFilmCountTemlate(filmCount) {
   return `<p>${filmCount} movies inside</p>`;
 }
 
-export default class FilmCount {
+export default class FilmCount extends AbstractView {
   constructor(filmCount) {
-    this._element = null;
+    super();
     this._filmCount = filmCount;
   }
 
   getTemplate() {
     return createFilmCountTemlate(this._filmCount);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
