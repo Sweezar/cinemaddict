@@ -63,15 +63,11 @@ function renderMainContentContainer() {
     const popup = new PopupView(card);
 
     cardCompanent
-      .getElement()
-      .querySelector('.film-card__poster')
-      .addEventListener('click', () => {
+      .setPopupClickHandler(() => {
         render(footer, popupContainer, RenderPosition.AFTEREND);
         render(popupContainer, popup, RenderPosition.AFTERBEGIN);
         popup
-          .getElement()
-          .querySelector('.film-details__close-btn')
-          .addEventListener('click', closePopup);
+          .setCloseHandler(closePopup);
         window.addEventListener('keydown', escKeydownHandler);
       });
     render(cardListElement, cardCompanent, RenderPosition.BEFOREEND);
@@ -97,9 +93,7 @@ function renderMainContentContainer() {
       itterationCount++;
     }
     if (MOVIE_CARD_COUNT >= dataMovies.length) {
-      if (this.matches('.films-list__show-more')) {
-        this.classList.add('visually-hidden');
-      }
+      document.querySelector('.films-list__show-more').classList.add('visually-hidden');
     }
     MOVIE_CARD_COUNT += 5;
   }
@@ -107,7 +101,7 @@ function renderMainContentContainer() {
   //Кнопка Show More
   function renderShowMoreBtn() {
     const showMoreBtn = new ShowMoreBtnView();
-    showMoreBtn.getElement().addEventListener('click', generateFilmList);
+    showMoreBtn.setClickHandler(() => generateFilmList());
     render(mainContent, showMoreBtn, RenderPosition.BEFOREEND);
   }
   renderShowMoreBtn();
